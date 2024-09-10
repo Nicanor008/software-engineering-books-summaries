@@ -1,0 +1,74 @@
+Title: Designing Distributed Systems
+Author: Eben Hewitt
+
+
+"Designing Distributed Systems" by Eben Hewitt provides a structured approach to understanding distributed systems, breaking down key concepts and principles that can be applied in day-to-day software engineering.
+
+1. Introduction to Distributed Systems
+Hewitt begins by explaining that distributed systems consist of multiple computers working together to achieve a common goal. These systems are essential for modern computing, where scalability, fault tolerance, and resilience are key.
+
+2. Core Principles
+Scalability: The ability to handle increased load by adding resources. In a distributed system, this is typically horizontal scaling (adding more nodes).
+Availability: Ensuring the system is always up and running. This often involves redundancy so that failure of a component does not take down the entire system.
+Fault Tolerance: The ability to continue functioning despite failures. Techniques such as replication, consensus algorithms (like Raft and Paxos), and redundancy are employed.
+Consistency: Ensuring that all nodes see the same data at the same time. This is especially challenging in distributed systems and can often conflict with availability, as highlighted in the CAP theorem (Consistency, Availability, and Partition Tolerance).
+3. Designing for Failure
+Hewitt emphasizes that in distributed systems, failures are inevitable. The system should be designed to expect failures and degrade gracefully. Key strategies include:
+
+Retry Logic: Implementing retries for transient failures.
+Idempotency: Ensuring that repeating the same operation leads to the same result, crucial for handling retries safely.
+Circuit Breakers: Automatically stopping requests to a failing service to prevent cascading failures across the system.
+4. Data Distribution and Consistency
+In distributed systems, data is often distributed across multiple nodes. Hewitt outlines strategies for achieving this:
+
+Sharding: Dividing data into smaller pieces and storing them on different nodes to balance the load.
+Replication: Duplicating data across nodes to improve availability and fault tolerance.
+Consistency Models: Different models like eventual consistency (where updates will propagate eventually) and strong consistency (all nodes are immediately consistent) are presented, with the trade-offs between availability and speed.
+5. Service-Oriented Architectures (SOA) & Microservices
+The book promotes Service-Oriented Architectures and Microservices as scalable designs for distributed systems. By breaking down a large system into smaller, independent services, each service can be developed, deployed, and scaled independently. Key points include:
+
+Loose Coupling: Services interact with each other through well-defined APIs, minimizing dependencies.
+Autonomy: Each service manages its own data and state, allowing independent scaling and deployment.
+6. Communication Between Services
+In distributed systems, services must communicate with each other. Hewitt covers several communication patterns:
+
+Synchronous vs. Asynchronous: Synchronous communication (e.g., HTTP) blocks the caller until a response is received, whereas asynchronous communication (e.g., message queues) allows the caller to continue and handle responses later.
+Message Queues: For reliable, decoupled communication between services, message queues (e.g., RabbitMQ, Kafka) are vital, ensuring messages are delivered even if the recipient service is down temporarily.
+Remote Procedure Calls (RPC): Frameworks like gRPC allow services to invoke methods on other services as if they were local, though they come with higher coupling.
+7. Event-Driven Architectures
+Event-driven systems are a significant pattern for handling distributed architectures. Services emit events, and other services react to them. Benefits include:
+
+Decoupling: Services do not directly call each other; instead, they publish and subscribe to events.
+Scalability: Event streams can be scaled independently, allowing services to process events at their own pace.
+8. Security in Distributed Systems
+Security is critical, and distributed systems have additional challenges due to their openness. Hewitt highlights several security measures:
+
+Authentication and Authorization: Use tokens (like JWT) to authenticate and authorize users across services.
+Encryption: Ensure that all communications between services are encrypted, especially in public networks.
+Rate Limiting: Protect services from being overwhelmed by malicious or accidental high-volume requests.
+9. Monitoring and Observability
+To ensure a distributed system runs smoothly, monitoring is essential. Hewitt emphasizes:
+
+Logging: Distributed systems should log all interactions between services for troubleshooting.
+Tracing: Use tracing tools (like Jaeger) to follow requests across multiple services and find performance bottlenecks or failures.
+Metrics: Gather metrics from all services to monitor health, performance, and usage.
+10. Testing Distributed Systems
+Testing in distributed systems is more complex than in monolithic systems, as you need to consider failures and network partitions. Hewitt advocates for:
+
+Unit Testing Individual Services: Each service should be tested in isolation.
+Integration Testing: Services should be tested together in a staging environment to catch issues with communication, data consistency, and performance.
+Chaos Engineering: Introduce deliberate failures into your system to ensure that it can handle unexpected issues, using tools like Chaos Monkey.
+11. Trade-offs and Challenges
+One of the main themes of the book is that distributed systems are all about trade-offs. You rarely get perfect availability, consistency, and partition tolerance. The key is to understand which is more important for your system (e.g., do you prioritize strong consistency or availability?) and design accordingly.
+
+12. Practical Implementation
+Pick the Right Tools: Different tools fit different purposes. Kafka might be great for event streaming, but RabbitMQ could be better for message delivery guarantees.
+Use Proven Patterns: Follow established patterns like CQRS (Command Query Responsibility Segregation) and Event Sourcing for handling state changes and updates in a distributed manner.
+Continuously Improve: Systems evolve, so your design should be adaptable. Always be prepared to iterate, especially in scaling, monitoring, and error handling.
+Summary of Takeaways
+Design for Failure: Expect things to go wrong, and have a strategy in place for handling failures.
+Scalability and Availability: Prioritize horizontal scaling, and ensure redundancy and fault tolerance.
+Communication Patterns: Use asynchronous messaging where possible to decouple services, and always monitor the performance and health of your services.
+Security: Implement robust security measures across all interactions in the system.
+Test Extensively: Cover unit, integration, and failure scenarios in your tests.
+By applying these principles, you can build reliable, scalable, and maintainable distributed systems.
